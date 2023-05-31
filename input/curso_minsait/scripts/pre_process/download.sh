@@ -10,6 +10,9 @@ do
 	echo "tabela $table"
     cd ../../raw/
     mkdir $table
+    chmod 777 $table
+    cd $table
+    curl -O https://raw.githubusercontent.com/caiuafranca/dados_curso/main/$table.csv
     
     hdfs dfs -mkdir /datalake/raw/$table
     hdfs dfs -chmod 777 /datalake/raw/$table
