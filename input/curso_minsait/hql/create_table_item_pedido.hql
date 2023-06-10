@@ -1,8 +1,6 @@
-CREATE EXTERNAL TABLE IF NOT EXISTS ${TARGET_DATABASE}.${TARGET_TABLE_EXTERNAL} ( 
-        id_categoria string,
-        ds_categoria string,
-        perc_parceiro string
-    )
+CREATE EXTERNAL TABLE IF NOT  EXISTS ${TARGET_DATABASE}.${TARGET_TABLE_EXTERNAL} ( 
+id_pedido string,id_produto string,quantidade string, vr_unitario string
+)
 COMMENT 'Tabela de Categoria'
 ROW FORMAT DELIMITED
 FIELDS TERMINATED BY '|'
@@ -12,9 +10,7 @@ TBLPROPERTIES ("skip.header.line.count"="1");
 
 
 CREATE TABLE IF NOT EXISTS ${TARGET_DATABASE}.${TARGET_TABLE_GERENCIADA} (
-id_categoria string,
-ds_categoria string,
-perc_parceiro string
+id_pedido string,id_produto string,quantidade string, vr_unitario string
 )
 PARTITIONED BY (DT_FOTO STRING)
 ROW FORMAT SERDE 'org.apache.hadoop.hive.ql.io.orc.OrcSerde' 
@@ -30,9 +26,10 @@ INSERT OVERWRITE TABLE
     ${TARGET_DATABASE}.${TARGET_TABLE_GERENCIADA}
 PARTITION(DT_FOTO) 
 SELECT
-    id_categoria string,
-    ds_categoria string,
-    perc_parceiro string,
+    id_pedido string,
+    id_produto string,
+    quantidade string, 
+    vr_unitario string,
 	${PARTICAO} as DT_FOTO
 FROM ${TARGET_DATABASE}.${TARGET_TABLE_EXTERNAL}
 ;

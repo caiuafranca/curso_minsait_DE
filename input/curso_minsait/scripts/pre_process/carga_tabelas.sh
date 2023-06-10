@@ -7,7 +7,7 @@ TABLES=("cidade" "estado" "filial" "parceiro" "cliente" "subcategoria" "categori
 
 for table in "${TABLES[@]}"
 do
-    TARGET_DATABASE="aula_hive"
+    TARGET_DATABASE="aula_hive_stg"
     HDFS_DIR="/datalake/raw/$table"
     TARGET_TABLE_EXTERNAL="$table"
     TARGET_TABLE_GERENCIADA="tbl_$table"
@@ -18,7 +18,7 @@ do
     --hivevar TARGET_TABLE_EXTERNAL="${TARGET_TABLE_EXTERNAL}"\
     --hivevar TARGET_TABLE_GERENCIADA="${TARGET_TABLE_GERENCIADA}"\
     --hivevar PARTICAO="${PARTICAO}"\
-    -f ../../hql/create_$table.hql 
+    -f ../../hql/create_table_$table.hql 
 done
 
  
